@@ -5,14 +5,25 @@ const getRamen = () => {
 }
 
 const renderRamenMenu = (ramen) => {
-  // console.log(ramen)
   let menuDiv = document.querySelector('div')
+  let imgMenuDiv = document.createElement('div')
   let imgMenu = document.createElement('img')
+  let btn = document.createElement('button')
 
   imgMenu.src = ramen.image
   imgMenu.addEventListener('click', () => renderRamenDetail(ramen))
 
-  menuDiv.append(imgMenu)
+  btn.textContent = "delete"
+  btn.className = 'delete-btn'
+  btn.addEventListener('click', () => {
+    console.log("hey")
+    btn.parentNode.remove()
+  })
+
+  imgMenuDiv.append(imgMenu)
+  imgMenuDiv.append(btn)
+
+  menuDiv.append(imgMenuDiv)
 }
 
 const getRamenDetail = () => {
@@ -42,18 +53,45 @@ const formInfo = () => {
 
     let newRamen = {}
 
-    newRamen['name'] = e.target['new-name'].value
-    newRamen['restaurant'] = e.target['new-restaurant'].value
-    newRamen['image'] = e.target['new-image'].value
-    newRamen['rating'] = e.target['new-rating'].value
-    newRamen['comment'] = e.target['new-comment'].value
+    if (e.target['new-image'].value === "" || null) {
+      alert("Image required")
+      return
+    } else {
+      newRamen['name'] = e.target['new-name'].value
+      newRamen['restaurant'] = e.target['new-restaurant'].value
+      newRamen['image'] = e.target['new-image'].value
+      newRamen['rating'] = e.target['new-rating'].value
+      newRamen['comment'] = e.target['new-comment'].value
 
-    renderRamenMenu(newRamen)
-    renderRamenDetail(newRamen)
+      renderRamenMenu(newRamen)
+      renderRamenDetail(newRamen)
+      form.reset()
+    }
+  })
+}
+
+const editFormInfo = () => {
+  const form = document.querySelector('#edit-ramen')
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    let imgDetail = document.querySelector(".detail-image")
+    let name = document.querySelector('.name')
+    let restaurant = document.querySelector('.restaurant')
+
+    let editRamen = {}
+
+    editRamen['name'] = name.textContent
+    editRamen['restaurant'] = restaurant.textContent
+    editRamen['image'] = imgDetail.src
+    editRamen['rating'] = e.target['new-rating'].value
+    editRamen['comment'] = e.target['new-comment'].value
+
+    renderRamenDetail(editRamen)
     form.reset()
   })
 }
 
-formInfo()
+formInfo();
+editFormInfo();
 getRamen();
 getRamenDetail();
