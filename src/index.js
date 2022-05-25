@@ -1,5 +1,3 @@
-// const ramens  = "http://localhost:3000/ramens"
-
 const getRamen = () => {
   fetch("http://localhost:3000/ramens/")
     .then(res => res.json())
