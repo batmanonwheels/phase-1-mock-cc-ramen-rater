@@ -35,7 +35,6 @@ const renderRamenDetail = (ramen) => {
   comment.textContent = ramen.comment
 }
 
-
 const formInfo = () => {
   const form = document.querySelector('#new-ramen')
   form.addEventListener('submit', (e) => {
